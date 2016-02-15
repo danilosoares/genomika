@@ -13,8 +13,9 @@ def index(request):
 def results(request):
 	term = request.GET['term']
 	
-	disease = Disease.objects.filter(id=1)
-	genes = disease.gene_set.all()
+	disease = Disease.objects.get(name=term)
+
+	print(disease)
 
 	template = loader.get_template('phenos/results.html')
 	c = Context({'genes' : genes, 'term' : term, 'disease' : disease })

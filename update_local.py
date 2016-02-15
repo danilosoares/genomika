@@ -23,22 +23,32 @@ else:
 	conn.execute("DELETE FROM phenos_gene")
 	conn.execute("DELETE FROM phenos_disease")
 	conn.execute("DELETE FROM phenos_diseasegene")
-
-	for row in rows:
-		conn.execute("INSERT INTO phenos_gene (name) VALUES(" + "'" + row[1] + "'" + ")")
-		conn.execute("INSERT INTO phenos_disease (name) VALUES(" + "'" + row[2] + "'" + ")")
-
-		gene = conn.execute("SELECT id FROM phenos_gene WHERE name=" + "'" + row[1] + "'")
-		disease = conn.execute("SELECT id FROM phenos_disease WHERE name=" + "'" + row[2] + "'")
-
-		for row in gene:
-			gene_id = row[0]
-		for row in disease:
-			disease_id = row[0]
-
-		conn.execute("INSERT INTO phenos_diseasegene (gene_id,disease_id) VALUES(" + str(gene_id) + "," + str(disease_id) + ")")
-
 	conn.commit()
+	
+	for row in rows:
+		cursor = conn.execute("SELECT id FROM phenos_disease where name=(" + "'" + row[2] + "'" + ")")
+		cursor_genes = conn.execute("SELECT id FROM phenos_gene where name=(" + "'" + row[1] + "'" + ")")
+
+		diseases=cursor.fetchall()
+		genes = cursor_genes.fetchall()
+
+		if not diseases:
+			conn.execute("INSERT INTO phenos_disease(id,name) VALUES(" + str(row[0]) + "," + "'" + str(row[2]) + "'" + ")")
+		if not genes:
+			conn.execute("INSERT INTO phenos_gene (id,name) VALUES(" + str(row[0]) + "," + "'" + str(row[1]) + "'" + ")")
+			
+		conn.execute("INSERT INTO phenos_diseasegene (gene_id,disease_id) VALUES(" + str(row[0]) + "," + str(row[0]) + ")")
+		conn.commit()
+		
+		if diseases:
+			for disease in diseases:
+				if genes:
+					for gene in genes:
+						conn.execute("INSERT INTO phenos_diseasegene (gene_id,disease_id) VALUES(" + str(gene[0]) + "," + str(disease[0]) + ")")
+						conn.commit()
+				else:
+					conn.execute("INSERT INTO phenos_diseasegene (gene_id,disease_id) VALUES(" + str(row[0]) + "," + str(disease[0]) + ")")
+					conn.commit()
 	conn.close()
 
 print "Dados Atualizados Com Sucesso!"
