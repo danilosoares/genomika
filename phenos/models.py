@@ -4,11 +4,12 @@ from django.db import models
 
 # Create your models here.
 
-class Disease(models.Model):
-    name = models.CharField(max_length=200)
-
 class Gene(models.Model):
     name = models.CharField(max_length=200)
+
+class Disease(models.Model):
+    name = models.CharField(max_length=200)
+    genes = models.ManyToManyField(Gene, through='DiseaseGene')
 
 class DiseaseGene(models.Model):
 	disease = models.ForeignKey(Disease, on_delete=models.CASCADE)
