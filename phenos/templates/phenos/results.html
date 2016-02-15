@@ -9,8 +9,8 @@
     <title>Genomika - Phenos</title>
 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static "phenos/css/bootstrap.min.css" %}" rel="stylesheet">
+    <!-- <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -25,7 +25,7 @@
       <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="#">
-              <img src="{% static "phenos/genomika.png" %}" alt="My image"/>
+              <img src="{% static "phenos/img/genomika.png" %}" alt="My image"/>
             </a>
         </div>
       </div>
@@ -37,19 +37,25 @@
           <b>{{ term }}</b>
           <br/>
           <br/>
-          Genes encontrados:
-          {% for disease in diseases %}
-            {% for gene in disease.genes.all %}
-              {{ gene.name }};
+          {% if not diseases %}
+            Doença não encontrada. Tente outra vez.
+          {% else %}
+            Genes encontrados:
+            {% for disease in diseases %}
+              {% for gene in disease.genes.all %}
+                {{ gene.name }};
+              {% endfor %}
             {% endfor %}
-          {% endfor %}
+          {% endif %}
         </div>
       </div>
     </nav>
+    <a class="btn btn-info" href="{% url 'phenos.views.index' %}">Voltar</a>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
-    <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+    <script src="{% static "phenos/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "phenos/js/phenos.js" %}"></script>
+    <!-- <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script> -->
   </body>
 </html>
