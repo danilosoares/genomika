@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,6 +10,8 @@
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -18,20 +21,35 @@
     <![endif]-->
   </head>
   <body>
-    <h1>Você pesquisou por: {{ term }}</h1>
-    <br/>
-    {% for disease in diseases %}
-      {{ disease }}
-      {% for gene in disease.genes.all %}
-        <ul>
-          <li>{{ gene.name }}</li>
-        </ul>
-      {% endfor %}
-    {% endfor %}
-    </ul>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+              <img src="{% static "phenos/genomika.png" %}" alt="My image"/>
+            </a>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          Resultado:
+          <br/>
+          <br/>
+          <b>{{ term }}</b>
+          <br/>
+          <br/>
+          Genes encontrados:
+          {% for disease in diseases %}
+            {% for gene in disease.genes.all %}
+              {{ gene.name }};
+            {% endfor %}
+          {% endfor %}
+        </div>
+      </div>
+    </nav>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+    <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
   </body>
 </html>
