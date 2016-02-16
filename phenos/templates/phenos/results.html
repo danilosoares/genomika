@@ -29,26 +29,27 @@
               <img src="{% static "phenos/img/genomika.png" %}" alt="My image"/>
             </a>
         </div>
+        <a class="btn btn-info" href="{% url 'phenos.views.logout' %}">Sair</a>
       </div>
-      <div class="panel panel-default">
-        <div class="panel-body">
-          Resultado:
-          <br/>
-          <br/>
-          {% if not diseases %}
-            Doença não encontrada. Tente outra vez.
-          {% else %}
-            {% for disease in diseases %}
-              <b>{{ disease.name }}: </b>
-              <br/>
-              Genes encontrados:
-              {% for gene in disease.genes.all %}
-                {{ gene.name }};
-              {% endfor %}
-              <br/>
+    </nav>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        Resultado:
+        <br/>
+        <br/>
+        {% if not diseases %}
+          Doença não encontrada. Tente outra vez.
+        {% else %}
+          {% for disease in diseases %}
+            <b>{{ disease.name }}: </b>
+            <br/>
+            Genes encontrados:
+            {% for gene in disease.genes.all %}
+              {{ gene.name }};
             {% endfor %}
-          {% endif %}
-        </div>
+            <br/>
+          {% endfor %}
+        {% endif %}
       </div>
     </nav>
     <a class="btn btn-info" href="{% url 'phenos.views.index' %}">Voltar</a>

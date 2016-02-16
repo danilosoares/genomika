@@ -18,7 +18,7 @@
     <link href="{% static "phenos/css/font-awesome.css" %}" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="{% static "phenos/css/style.css" %}" rel="stylesheet">
-    <link href="{% static "phenos/css/style-responsive.css" %}" rel="stylesheet">    
+    <link href="{% static "phenos/css/style-responsive.css" %}" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>
@@ -28,23 +28,20 @@
 </head>
   <body class="login-body">
     <div class="container">
-        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-        <form class="form-signin" action="/phenos/auth/" method="post"> 
-            {% csrf_token %}
-            <h2 class="form-signin-heading">Genomika</h2>
-            <div class="login-wrap">
-                <input type="text" name="user_email" class="form-control" placeholder="User ID" autofocus>
-                <input type="password" name="user_password" class="form-control" placeholder="Password">
-                <button class="btn btn-lg btn-login btn-block" type="submit">Login</button>
-                <div class="registration">
-                Não tem conta?<br/>
-                <a class="btn btn-default" href="{% url 'phenos.views.registration' %}">Cadastrar-se</a>
+      <form class="form-signin" action="/phenos/user_create/" method="post">
+        {% csrf_token %}
+        <h2 class="form-signin-heading">Registro de Usuário</h2>
+        <div class="login-wrap">
+            <p>Dados do Usuário</p>
+            <input type="text" class="form-control" name="user_email" placeholder="Email" autofocus>
+            <input type="password" name="user_password" class="form-control" placeholder="Password">
+            <button class="btn btn-lg btn-login btn-block" type="submit">Cadastrar</button>
+            <div class="registration">
+                Já está Registrado?<br/>
+                <a class="btn btn-default" href="{% url 'phenos.views.login' %}">Faça Login</a>
             </div>
-            </div>
-        </form>
+        </div>
+      </form>
     </div>
-    <!-- js placed at the end of the document so the pages load faster -->
-    <script src="{% static "phenos/js/jquery.js" %}"></script>
-    <script src="{% static "phenos/js/jquery-ui.js" %}"></script>
   </body>
 </html>
