@@ -9,8 +9,6 @@ from phenos.models import Disease
 from phenos.models import Gene
 from phenos.models import User
 from django import forms
-import bcrypt
-
 
 # Create your views here.
 

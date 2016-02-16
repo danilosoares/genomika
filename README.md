@@ -1,3 +1,7 @@
+**#Dependência a ser instalada
+**
+psycopg2 - pip install psycopg2
+
 **#Tarefa 1
 **
 
