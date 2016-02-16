@@ -25,6 +25,9 @@ else:
 	conn.execute("DELETE FROM phenos_diseasegene")
 	conn.commit()
 	
+	disease_exists = False
+	gene_exists = False
+
 	for row in rows:
 		cursor = conn.execute("SELECT id FROM phenos_disease where name=(" + "'" + row[2] + "'" + ")")
 		cursor_genes = conn.execute("SELECT id FROM phenos_gene where name=(" + "'" + row[1] + "'" + ")")
@@ -34,21 +37,36 @@ else:
 
 		if not diseases:
 			conn.execute("INSERT INTO phenos_disease(id,name) VALUES(" + str(row[0]) + "," + "'" + str(row[2]) + "'" + ")")
+			conn.commit()
+		else:
+			for disease in diseases:
+				disease_id_to_insert = disease[0]
+				disease_exists = True
+
 		if not genes:
 			conn.execute("INSERT INTO phenos_gene (id,name) VALUES(" + str(row[0]) + "," + "'" + str(row[1]) + "'" + ")")
-			
-		conn.execute("INSERT INTO phenos_diseasegene (gene_id,disease_id) VALUES(" + str(row[0]) + "," + str(row[0]) + ")")
-		conn.commit()
+			conn.commit()
+	 	else:
+	 		for gene in genes:
+	 			gene_id_to_insert = gene[0]
+	 			gene_exists = True
 		
-		if diseases:
-			for disease in diseases:
-				if genes:
-					for gene in genes:
-						conn.execute("INSERT INTO phenos_diseasegene (gene_id,disease_id) VALUES(" + str(gene[0]) + "," + str(disease[0]) + ")")
-						conn.commit()
-				else:
-					conn.execute("INSERT INTO phenos_diseasegene (gene_id,disease_id) VALUES(" + str(row[0]) + "," + str(disease[0]) + ")")
-					conn.commit()
+		if gene_exists and disease_exists:	
+			conn.execute("INSERT INTO phenos_diseasegene (gene_id,disease_id) VALUES(" + str(gene_id_to_insert) + "," + str(disease_id_to_insert) + ")")
+			conn.commit()
+		elif gene_exists and not(disease_exists):
+			conn.execute("INSERT INTO phenos_diseasegene (gene_id,disease_id) VALUES(" + str(gene_id_to_insert) + "," + str(row[0]) + ")")
+			conn.commit()
+		elif not(gene_exists) and disease_exists:
+			conn.execute("INSERT INTO phenos_diseasegene (gene_id,disease_id) VALUES(" + str(row[0]) + "," + str(disease_id_to_insert) + ")")
+			conn.commit()
+		elif not(gene_exists) and not(disease_exists):
+			conn.execute("INSERT INTO phenos_diseasegene (gene_id,disease_id) VALUES(" + str(row[0]) + "," + str(row[0]) + ")")
+			conn.commit()
+
+		disease_exists = False
+		gene_exists = False
+		
 	conn.close()
 
 print "Dados Atualizados Com Sucesso!"
