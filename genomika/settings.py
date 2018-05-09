@@ -11,9 +11,21 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+from os.path import abspath
+from os.path import dirname
+from os.path import join
+from os.path import normpath
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.9/howto/static-files/
+DJANGO_ROOT = dirname(dirname(abspath(__file__)))
+
+STATIC_ROOT = normpath(join(DJANGO_ROOT, 'assets'))
+
+STATIC_URL = '/static/'
 
 
 # Quick-start development settings - unsuitable for production
@@ -114,9 +126,3 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.9/howto/static-files/
-
-STATIC_URL = '/static/'
