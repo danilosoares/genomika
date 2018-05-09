@@ -25,6 +25,8 @@ def results(request):
 		template = loader.get_template('phenos/login.html')
 		return HttpResponse(template.render(request))
 	term = request.GET['term']
+	if term == '' or term is None:
+		term = 'Breast Cancer'
 	diseases = Disease.objects.filter(name__in=term.split(','))
 	
 	template = loader.get_template('phenos/results.html')
