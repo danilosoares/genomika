@@ -61,8 +61,8 @@ def user_create(request):
 	user_email = request.POST['user_email']
 	user_password = request.POST['user_password']
 	user = User(email=user_email,password=user_password)
-	created_user = user.save()
-	request.session['user_id'] = created_user.id
+	user.save()
+	created_user = User.objects.first()
 	template = loader.get_template('phenos/index.html')
 	return HttpResponse(template.render(request))
 
