@@ -23,9 +23,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 DJANGO_ROOT = dirname(dirname(abspath(__file__)))
 
-STATIC_ROOT = normpath(join(DJANGO_ROOT, 'assets'))
+STATIC_ROOT = normpath(join(DJANGO_ROOT, 'phenos', 'assets'))
 
 STATIC_URL = '/static/'
+
+print(BASE_DIR)
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'phenos', 'static'),
+]
 
 
 # Quick-start development settings - unsuitable for production

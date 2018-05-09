@@ -1,1 +1,1 @@
-web: gunicorn genomika.wsgi
+web: python manage.py runserver
