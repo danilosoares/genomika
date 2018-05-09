@@ -30,9 +30,9 @@ def results(request):
     term = request.POST['term']
     diseases = Disease.objects.filter(name__in=term.split(','))
 
-    template = loader.get_template('phenos/results.html')
-    c = Context({'term': term, 'diseases': diseases})
-    return HttpResponse(template.render({}, c))
+    template_name = 'phenos/results.html'
+    c = {'term': term, 'diseases': diseases}
+    return TemplateResponse(request, template_name, c)
 
 
 def diseases(request):
