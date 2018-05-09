@@ -23,13 +23,13 @@
               <img src="{% static "phenos/img/genomika.png" %}" alt="My image"/>
             </a>
         </div>
-        <a class="btn btn-info" href="{% url 'phenos.views.logout' %}">Sair</a>
+        <a class="btn btn-info" href="{% url 'phenos:logout' %}">Sair</a>
   		</div>
     </nav>
     <div class="panel panel-default">
   		<div class="panel-body">
 			{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-			<form action="/phenos/results/" method="get">
+			<form action="/phenos/results/" method="post">
 				{% csrf_token %}
 		  		<div class="form-group">
 		    		<input type="text" class="form-control" name="term" id="term" placeholder="Informe a doença de interesse ou várias doenças separadas por vírgula. Ex.: Breast Cancer,Renal Cancer">
