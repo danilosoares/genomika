@@ -1,9 +1,10 @@
 var Phenos = {
     init: function () {
-        Phenos.autocomplete_disease();
+        var count = 0;
+        Phenos.autocomplete_disease(count);
     },
 
-    autocomplete_disease : function() {
+    autocomplete_disease : function(count) {
         $("#term").autocomplete({
             source:  function(request, response) {
                 $.get('/phenos/diseases', { term : request.term }, function(data){
@@ -19,7 +20,13 @@ var Phenos = {
             },
      
             select: function(event, ui){
-                $('#hidden_field_disease_id').val(ui.item.value);
+                if(count < 1) {
+                    $('#hidden_field_disease_id').val(ui.item.value);
+                    count += 1;
+                } else {
+                    console.log("Yeah! You found me!");
+                    error.error;
+                }
             }
         });
     }
